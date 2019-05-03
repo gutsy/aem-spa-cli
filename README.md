@@ -17,11 +17,13 @@ A node cli to get started with the new AEM SPA editor. *Work in progress, consid
 `npm install -g aem-spa-cli`
 
 ## Using the CLI
-Run `aem-cli create` to create a new AEM SPA editor project. Answer the questions. Have fun. 
+Run `aem-spa create` to create a new AEM SPA editor project. Answer the questions. Have fun. 
 
-Run `aem-cli help` to see the helpful menu.
+Run `aem-spa generate component` to create a new AEM SPA editor component. Answer the questions. Have more fun. 
 
-Run `aem-cli version` to see the currently installed version.
+Run `aem-spa help` to see the helpful menu.
+
+Run `aem-spa version` to see the currently installed version.
 
 
 

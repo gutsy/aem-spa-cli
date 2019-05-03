@@ -94,7 +94,7 @@ module.exports = (args) => {
             'archetypeCatalog': 'remote',
             'archetypeGroupId': 'com.adobe.cq.spa.archetypes',
             'archetypeArtifactId': 'aem-spa-project-archetype',
-            'archetypeVersion': '1.0.3-SNAPSHOT',
+            'archetypeVersion': '1.0.4',
             'package': answers['package'],
             'groupId': answers['groupId'],
             'artifactId': answers['artifactId'],

@@ -32,7 +32,7 @@ module.exports = (args) => {
                 break;
 
             case 'component':
-                console.log('going to generate a component named ' + name);
+                console.log('going to generate a component, prepare for questions!');
                 componentQuestions(aemSpaProjectRoot);
                 break;
 
@@ -81,16 +81,17 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
             });
 
             if (javaPackage) {
-                let packagePath = javaPackage.replace('.', '/');
+                //todo figure out why this isn't working
+                let packagePath = javaPackage.replace("\.", "\/");
                 fs.outputFile(javaRoot + '/' + packagePath + '.java', aemJava.getJava(javaPackage, aemName), function(err) {
                     if (err) throw err;
-                    console.log('Created React component js file');
+                    console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
                 });
 
                 //TODO not sure if this will work, the supertype
                 fs.outputFile(javaRoot + '/' + packagePath + '.java', aemJavaImpl.getJavaImpl(javaPackage, aemName, superType), function(err) {
                     if (err) throw err;
-                    console.log('Created React component js file');
+                    console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
                 });
             }
 
@@ -163,7 +164,7 @@ function componentQuestions(projectRoot) {
         if (answers['allGood']) {
             const spinner = ora('Generating Component').start();
 
-            let name = answers['name'];
+            let name = answers['componentName'];
             let projectFolder = answers['projectFolder'];
             let componentGroup = answers['componentGroup'];
             let superType = answers['superType'];
