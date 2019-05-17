@@ -81,8 +81,7 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
             });
 
             if (javaPackage) {
-                //todo figure out why this isn't working
-                let packagePath = javaPackage.replace("\.", "\/");
+                let packagePath = javaPackage.toString().split('\.').join('\/');
                 fs.outputFile(javaRoot + '/' + packagePath + '.java', aemJava.getJava(javaPackage, aemName), function(err) {
                     if (err) throw err;
                     console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
@@ -91,7 +90,7 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
                 //TODO not sure if this will work, the supertype
                 fs.outputFile(javaRoot + '/' + packagePath + '.java', aemJavaImpl.getJavaImpl(javaPackage, aemName, superType), function(err) {
                     if (err) throw err;
-                    console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
+                    console.log('Created React component java implementation file at path ' + javaRoot + '/' + packagePath);
                 });
             }
 
