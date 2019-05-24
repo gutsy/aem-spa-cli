@@ -6,7 +6,7 @@ module.exports = {
          '\n' +
          'import com.adobe.cq.export.json.ComponentExporter;\n' +
          '\n' +
-         'public interface' + name + 'extends ComponentExporter {\n' +
+         'public interface ' + name + ' extends ComponentExporter {\n' +
          '    \n' +
          '    /**\n' +
          '     * Replace this property with your own.\n' +

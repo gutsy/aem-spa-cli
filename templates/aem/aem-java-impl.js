@@ -1,6 +1,6 @@
 module.exports = {
     getJavaImpl(packageName, name, resourceType) {
-        return 'package com.adobe.aem.guides.wkndevents.core.models.impl;\n' +
+        return 'package ' + packageName + ';\n' +
             '\n' +
             'import ' + packageName + '.' + name + ';\n' +
             'import com.adobe.cq.export.json.ComponentExporter;\n' +
