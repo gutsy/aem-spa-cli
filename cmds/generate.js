@@ -60,6 +60,7 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
             console.log(name + ' component already exists, please create something else');
         } else {
 
+            //TODO ensure project files are outputting at somethingCool/components/content/something
             fs.outputFile(aemPath + '/_cq_editConfig.xml', aemComponentEditConfig.getEditConfig(), function(err) {
                 if (err) throw err;
                 console.log('Created AEM component edit config');
@@ -81,13 +82,13 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
             });
 
             if (javaPackage) {
+                //TODO make sure java files have JavaNames
                 let packagePath = javaPackage.toString().split('\.').join('\/');
                 fs.outputFile(javaRoot + '/' + packagePath + '/' + name.toLowerCase() + '.java', aemJava.getJava(javaPackage, aemName), function(err) {
                     if (err) throw err;
                     console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
                 });
 
-                //TODO not sure if this will work, the supertype
                 fs.outputFile(javaRoot + '/' + packagePath + '/' + name.toLowerCase() + 'Impl.java', aemJavaImpl.getJavaImpl(javaPackage, aemName, superType), function(err) {
                     if (err) throw err;
                     console.log('Created React component java implementation file at path ' + javaRoot + '/' + packagePath);
@@ -122,7 +123,7 @@ function componentQuestions(projectRoot) {
             name: 'projectFolder',
             message: 'Project folder (first folder after \'apps\')?',
             default: function () {
-                return 'customComponents';
+                return 'somethingCool';
             }
         },
         {
@@ -132,8 +133,11 @@ function componentQuestions(projectRoot) {
         },
         {
             type: 'input',
-            name: 'superType',
-            message: 'super type for this component, leave blank if custom *optional*',
+            name: 'resourceType',
+            message: 'resource type for this component?',
+            default: function () {
+                return 'somethingCool/components/content/something';
+            }
         },
         {
             type: 'input',
@@ -166,10 +170,10 @@ function componentQuestions(projectRoot) {
             let name = answers['componentName'];
             let projectFolder = answers['projectFolder'];
             let componentGroup = answers['componentGroup'];
-            let superType = answers['superType'];
+            let resourceType = answers['superType'];
             let javaPackage = answers['package'];
 
-            generateComponent(projectRoot, name, projectFolder, componentGroup, superType, javaPackage, spinner);
+            generateComponent(projectRoot, name, projectFolder, componentGroup, resourceType, javaPackage, spinner);
 
         } else {
             console.log('Exiting component generation...');
