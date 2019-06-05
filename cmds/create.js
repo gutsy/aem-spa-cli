@@ -1,6 +1,6 @@
 const mvn = require('maven').create();
 const inquirer = require('inquirer');
-const ora = require('ora')
+const ora = require('ora');
 
 module.exports = (args) => {
 
@@ -52,7 +52,7 @@ module.exports = (args) => {
             name: 'package',
             message: 'Package Name:',
             default: function () {
-                return 'com.myco.somethingCool';
+                return 'com.myco.somethingcool';
             }
         },
         {
