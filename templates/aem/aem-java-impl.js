@@ -1,8 +1,8 @@
 module.exports = {
-    getJavaImpl(packageName, name, resourceType) {
+    getJavaImpl(packageName, name, resourceType, className) {
         return 'package ' + packageName + ';\n' +
             '\n' +
-            'import ' + packageName + '.' + name + ';\n' +
+            'import ' + packageName + '.' + className + ';\n' +
             'import com.adobe.cq.export.json.ComponentExporter;\n' +
             'import com.adobe.cq.export.json.ExporterConstants;\n' +
             'import com.day.cq.wcm.api.designer.Style;\n' +
@@ -18,22 +18,22 @@ module.exports = {
             '\n' +
             '@Model(\n' +
             '    adaptables = SlingHttpServletRequest.class, \n' +
-            '    adapters = {' + name + '.class, ComponentExporter.class}, \n' +
-            '    resourceType = ' + name + 'Impl.RESOURCE_TYPE,\n' +
+            '    adapters = {' + className + '.class, ComponentExporter.class}, \n' +
+            '    resourceType = ' + className + 'Impl.RESOURCE_TYPE,\n' +
             '    defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL\n' +
             '    )\n' +
             '@Exporter(\n' +
             '    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, \n' +
             '    extensions = ExporterConstants.SLING_MODEL_EXTENSION\n' +
             '    )\n' +
-            'public class ' + name + 'Impl implements ' + name + ' {\n' +
+            'public class ' + className + 'Impl implements ' + className + ' {\n' +
             '\n' +
-            '    static final String RESOURCE_TYPE = ' + resourceType + ';\n' +
+            '    static final String RESOURCE_TYPE = "' + resourceType + '";\n' +
             '\n' +
             '//TODO set this label' +
-            '    static final String LABEL_SOMETHING   = "your label goes here";\n' +
+            '\n    static final String LABEL_SOMETHING   = "your label goes here";\n' +
             '\n' +
-            '    private static final Logger log = LoggerFactory.getLogger(' + name + 'Impl.class);\n' +
+            '    private static final Logger log = LoggerFactory.getLogger(' + className + 'Impl.class);\n' +
             '\n' +
             '    @ScriptVariable\n' +
             '    private ValueMap properties;\n' +

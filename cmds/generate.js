@@ -28,7 +28,7 @@ module.exports = (args) => {
         switch (item) {
             case 'template':
                 console.log('going to generate a template');
-                generateTemplate(aemSpaProjectRoot, name, projectFolder, componentGroup, superType);
+                generateTemplate(aemSpaProjectRoot, name, projectFolder, componentGroup, resourceType);
                 break;
 
             case 'component':
@@ -47,7 +47,7 @@ module.exports = (args) => {
 };
 
 
-function generateComponent(projectRoot, name, projectFolder, componentGroup, superType, javaPackage, spinner) {
+function generateComponent(projectRoot, name, projectFolder, componentGroup, resourceType, javaPackage, spinner, className) {
     if (isReactProject) {
 
         let aemName = name;
@@ -66,7 +66,7 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
                 console.log('Created AEM component edit config');
             });
 
-            fs.outputFile(aemPath + '/.content.xml', aemComponentContentXml.getContentXml(aemName, superType, componentGroup), function(err) {
+            fs.outputFile(aemPath + '/.content.xml', aemComponentContentXml.getContentXml(aemName, resourceType, componentGroup), function(err) {
                 if (err) throw err;
                 console.log('Created AEM component content xml');
             });
@@ -84,12 +84,12 @@ function generateComponent(projectRoot, name, projectFolder, componentGroup, sup
             if (javaPackage) {
                 //TODO make sure java files have JavaNames
                 let packagePath = javaPackage.toString().split('\.').join('\/');
-                fs.outputFile(javaRoot + '/' + packagePath + '/' + name.toLowerCase() + '.java', aemJava.getJava(javaPackage, aemName), function(err) {
+                fs.outputFile(javaRoot + '/' + packagePath + '/' + className + '.java', aemJava.getJava(javaPackage, className), function(err) {
                     if (err) throw err;
                     console.log('Created React component java file at path ' + javaRoot + '/' + packagePath);
                 });
 
-                fs.outputFile(javaRoot + '/' + packagePath + '/' + name.toLowerCase() + 'Impl.java', aemJavaImpl.getJavaImpl(javaPackage, aemName, superType), function(err) {
+                fs.outputFile(javaRoot + '/' + packagePath + '/' + className + 'Impl.java', aemJavaImpl.getJavaImpl(javaPackage, aemName, resourceType, className), function(err) {
                     if (err) throw err;
                     console.log('Created React component java implementation file at path ' + javaRoot + '/' + packagePath);
                 });
@@ -153,6 +153,14 @@ function componentQuestions(projectRoot) {
             message: 'Package Name if java classes are needed (full package name, i.e. com.my.app.component. leave blank if you don\'t want java classes generated) *optional*',
         },
         {
+            type: 'input',
+            name: 'className',
+            message: 'Java Class name if needed. Will not be used if previous question was left blank',
+            default: function () {
+                return 'SomethingCool';
+            }
+        },
+        {
             type: 'confirm',
             name: 'allGood',
             message: 'Review your above selections. Ready to generate component?',
@@ -170,10 +178,11 @@ function componentQuestions(projectRoot) {
             let name = answers['componentName'];
             let projectFolder = answers['projectFolder'];
             let componentGroup = answers['componentGroup'];
-            let resourceType = answers['superType'];
+            let resourceType = answers['resourceType'];
             let javaPackage = answers['package'];
+            let className = answers['className'];
 
-            generateComponent(projectRoot, name, projectFolder, componentGroup, resourceType, javaPackage, spinner);
+            generateComponent(projectRoot, name, projectFolder, componentGroup, resourceType, javaPackage, spinner, className);
 
         } else {
             console.log('Exiting component generation...');
