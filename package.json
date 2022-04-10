@@ -18,7 +18,7 @@
     "inquirer": "^6.2.1",
     "latest-github-release": "^1.0.4",
     "maven": "^4.4.1",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "ora": "^3.0.0"
   }
 }
